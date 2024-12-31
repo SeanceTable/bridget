@@ -86,24 +86,22 @@ export const AppMenu = observer(() => {
                 }}
               >
                 <Link href='/bridge' passHref legacyBehavior>
-                  <NavLink
-                    pathname={pathname}
-                    style={logoStyle}
-                  >
+                  <NavLink pathname={pathname} style={logoStyle}>
                     <Logo
-                      src={'/static/telos-logo.png'}
+                      src={'/static/qportal.gif'}
                       width={95 * 1.5}
                       height={112 * 1.5}
-                      alt='Telos Blockchain Logo'
+                      alt='qBit Logo'
                       priority={true}
                     />
+
                   </NavLink>
                 </Link>
               </div>
               <div style={{display: 'flex', justifyContent: 'left', marginLeft: '30px'}}>
                 <NavLink
                   sx={{'margin-left': {xs: 'auto', md: 'unset'}, display: 'flex'}}
-                  href='https://stakely.io/en/faucet/telos-evm-tlos'
+                  href='/oft'
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -114,7 +112,24 @@ export const AppMenu = observer(() => {
                     height={22}
                     style={{filter: 'invert(100%)', marginRight: '10px'}}
                   />
-                  Faucet
+                  OFT Transfer
+                </NavLink>
+              </div>
+              <div style={{display: 'flex', justifyContent: 'left', marginLeft: '30px'}}>
+                <NavLink
+                  sx={{'margin-left': {xs: 'auto', md: 'unset'}, display: 'flex'}}
+                  href='https://cultist.in/qBit/'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Image
+                    src='/static/icons/arrowup.svg'
+                    alt='placeholder'
+                    width={22}
+                    height={22}
+                    style={{filter: 'invert(100%)', marginRight: '10px'}}
+                  />
+                  qBit Home
                 </NavLink>
               </div>
               <div
@@ -127,7 +142,7 @@ export const AppMenu = observer(() => {
               >
                 <NavLink
                   sx={{'margin-right': {xs: 'auto', md: 'unset'}, display: 'flex'}}
-                  href='https://dapp.p.network/#/swap?asset=tlos&from=eth&to=telos'
+                  href='https://qportal.vercel.app/'
                   target='_blank'
                   rel='noreferrer'
                 >
@@ -138,7 +153,7 @@ export const AppMenu = observer(() => {
                     height={22}
                     style={{filter: 'invert(100%)', marginRight: '10px'}}
                   />
-                  pToken Bridge (Deprecated)
+                  qPortal
                 </NavLink>
               </div>
               <div style={{position: 'absolute', bottom: '24px', left: '24px', width: '100%'}}>
@@ -196,15 +211,12 @@ export const AppMenu = observer(() => {
                     }}
                   >
                     <Link href='/bridge' passHref legacyBehavior>
-                      <NavLink
-                        pathname={pathname}
-                        style={logoStyle}
-                      >
+                      <NavLink pathname={pathname} style={logoStyle}>
                         <Logo
-                          src={'/static/telos-logo.png'}
+                          src={'/static/qportal.gif'}
                           width={95 * 1.5}
                           height={112 * 1.5}
-                          alt='Telos Blockchain Logo'
+                          alt='qPortal Logo'
                           priority={true}
                         />
                       </NavLink>
@@ -229,15 +241,32 @@ export const AppMenu = observer(() => {
                     </div>
                   </div>
                 </div>
+                <div style={{display: 'flex', justifyContent: 'left', marginLeft: '30px'}}>
+                <NavLink
+                  sx={{'margin-left': {xs: 'auto', md: 'unset'}, display: 'flex'}}
+                  href='/oft'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Image
+                    src='/static/icons/arrowup.svg'
+                    alt='placeholder'
+                    width={22}
+                    height={22}
+                    style={{filter: 'invert(100%)', marginRight: '10px'}}
+                  />
+                  OFT Transfer
+                </NavLink>
+              </div>
                 <div style={{marginLeft: '30px'}}>
                   <NavLink
                     sx={{'margin-left': {xs: 'auto', md: 'unset'}, display: 'flex'}}
-                    href='https://stakely.io/en/faucet/telos-evm-tlos'
+                    href='https://cultist.in/qBit/'
                     target='_blank'
                     rel='noreferrer'
                   >
                     <Icon type='link' size={28} style={{marginRight: '10px'}} />
-                    Faucet
+                    qBit Home
                   </NavLink>
                 </div>
                 <div
@@ -248,12 +277,12 @@ export const AppMenu = observer(() => {
                 >
                   <NavLink
                     sx={{'margin-right': {xs: 'auto', md: 'unset'}, display: 'flex'}}
-                    href='https://dapp.p.network/#/swap?asset=tlos&from=eth&to=telos'
+                    href='https://qportal.vercel.app/'
                     target='_blank'
                     rel='noreferrer'
                   >
                     <Icon type='link' size={28} style={{marginRight: '10px'}} />
-                    pToken Bridge (Deprecated)
+                    qPortal
                   </NavLink>
                 </div>
 
@@ -317,26 +346,25 @@ export const AppHeader = observer(() => {
 export const AppFooter = () => {
   return (
     <Bar style={{display: 'flex', justifyContent: 'space-between'}}>
-      <Bar.Section style={{zIndex: 10}}>
-      </Bar.Section>
+      <Bar.Section style={{zIndex: 10}}></Bar.Section>
       <Bar.Section sx={{typography: 'p3'}}>
         <Box
           component='a'
-          href='https://telos.net'
+          href='https://cultist.in/qBit/'
           sx={{typography: 'link', display: 'flex', alignItems: 'center', gap: 1}}
           target='_blank'
         >
           <Icon type='globe' size={16} />
-          telos.net
+          qBit
         </Box>
         <Box
           component='a'
-          href='https://docs.telos.net/'
+          href='https://qportal.vercel.app/'
           sx={{typography: 'link', display: 'flex', alignItems: 'center', gap: 1}}
           target='_blank'
         >
           <Icon type='file' size={16} />
-          Telos Docs
+          qPortal
         </Box>
       </Bar.Section>
     </Bar>

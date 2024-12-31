@@ -19,7 +19,7 @@ const BridgePage: NextPageWithLayout = () => {
       <Panel>
         <BridgeTracker sx={{mb: 4}} />
       </Panel>
-      <Panel title='Bridge' endAdornment={<GasPrice />}>
+      <Panel title='qBit Bridge' endAdornment={<GasPrice />}>
         <Bridge />
       </Panel>
     </>
@@ -33,7 +33,7 @@ BridgePage.getLayout = (page) => (
     footer={<AppFooter />}
     sidebar={<AppMenu />}
   >
-    <CustomHtmlHead title='Telos Bridge'/>
+    <CustomHtmlHead title='qBit Bridge'/>
     {page}
   </PageLayout>
 );

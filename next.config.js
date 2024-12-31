@@ -7,6 +7,11 @@ const nextConfig = {
         destination: '/bridge',
         permanent: false,
       },
+      {
+        source: '/',
+        destination: '/oft',
+        permanent: false,
+      },
     ];
   },
   webpack(config) {

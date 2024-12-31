@@ -4,7 +4,13 @@ import {AptosBridgeConfig} from '@layerzerolabs/ui-bridge-aptos';
 import {getNativeCurrency, Token} from '@layerzerolabs/ui-core';
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-
+const QBIT_ADDRESS = {
+  [ChainId.AVALANCHE]: '0x74A96f3113A0046Df3956f77d7A753025331f9Bd',
+  [ChainId.POLYGON]: '0x8bF087Be99983A4FF928A94Ac302fD5f139e4D7d',
+  [ChainId.BASE]: '0xF25893D5B7a99F087dD55fFb65Ca29133486090e',
+  [ChainId.ARBITRUM]: '0x529E43f03C426ba50dEc652496a9C84e617507Ca',
+  [ChainId.OPTIMISM]: '0x529E43f03C426ba50dEc652496a9C84e617507Ca',
+} as const;
 
 const USDC_ADDRESS = {
   [ChainId.ETHEREUM]: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -50,6 +56,13 @@ export const BRIDGE: AptosBridgeConfig = {
     new Token(ChainId.POLYGON, USDC_ADDRESS[ChainId.POLYGON], 6, 'USDC', 'USD Coin'),
     new Token(ChainId.ARBITRUM, USDC_ADDRESS[ChainId.ARBITRUM], 6, 'USDC', 'USD Coin'),
     new Token(ChainId.OPTIMISM, USDC_ADDRESS[ChainId.OPTIMISM], 6, 'USDC', 'USD Coin'),
+
+    // qBit Tokens
+    new Token(ChainId.AVALANCHE, QBIT_ADDRESS[ChainId.AVALANCHE], 18, 'qBit', 'Quantum Bit'),
+    new Token(ChainId.POLYGON, QBIT_ADDRESS[ChainId.POLYGON], 18, 'qBit', 'Quantum Bit'),
+    new Token(ChainId.BASE, QBIT_ADDRESS[ChainId.BASE], 18, 'qBit', 'Quantum Bit'),
+    new Token(ChainId.ARBITRUM, QBIT_ADDRESS[ChainId.ARBITRUM], 18, 'qBit', 'Quantum Bit'),
+    new Token(ChainId.OPTIMISM, QBIT_ADDRESS[ChainId.OPTIMISM], 18, 'qBit', 'Quantum Bit'),
 
     // USDT
     new Token(ChainId.ETHEREUM, USDT_ADDRESS[ChainId.ETHEREUM], 6, 'USDT', 'USD Tether'),

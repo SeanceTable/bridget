@@ -21,7 +21,7 @@ import {GasPrice} from './GasPrice';
 import {NetworkSelect, NetworkSelectOption} from './NetworkSelect';
 
 // OFT
-const symbol = 'LVC';
+const symbol = 'qBit';
 
 export const OFTBridge = observer(() => {
   useEffect(() => {

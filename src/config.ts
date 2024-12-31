@@ -4,7 +4,7 @@ import {OnftBridgeConfig, OnftStandard} from '@layerzerolabs/ui-bridge-onft';
 import {WrappedTokenBridgeConfig} from '@layerzerolabs/ui-bridge-wrapped-token';
 import {Coin, Currency, Token} from '@layerzerolabs/ui-core';
 
-import { bridgeAbi } from './abi/bridgeAbi';
+import {bridgeAbi} from './abi/bridgeAbi';
 
 export const TLOS_SYMBOL = 'TLOS';
 
@@ -28,6 +28,14 @@ export const wrapped_mainnet: WrappedTokenBridgeConfig = {
       new Token(ChainId.ETHEREUM, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC'),
       new Token(ChainId.ARBITRUM, '0xaf88d065e77c8cC2239327C5EDb3A432268e5831', 6, 'USDC'),
       new Token(ChainId.BSC, '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d', 18, 'USDC'),
+    ],
+    [
+      // qBit
+      new Token(ChainId.AVALANCHE, '0x74A96f3113A0046Df3956f77d7A753025331f9Bd', 18, 'qBit'),
+      new Token(ChainId.POLYGON, '0x8bF087Be99983A4FF928A94Ac302fD5f139e4D7d', 18, 'qBit'),
+      new Token(ChainId.BASE, '0xF25893D5B7a99F087dD55fFb65Ca29133486090e', 18, 'qBit'),
+      new Token(ChainId.ARBITRUM, '0x529E43f03C426ba50dEc652496a9C84e617507Ca', 18, 'qBit'),
+      new Token(ChainId.OPTIMISM, '0x529E43f03C426ba50dEc652496a9C84e617507Ca', 18, 'qBit'),
     ],
     [
       // ETH
@@ -171,7 +179,7 @@ const BANANA = {
     },
     {
       chainId: ChainId.BSC,
-      address: '0x7097Ee02465FB494841740B1a2b63c21Eed655E7'
+      address: '0x7097Ee02465FB494841740B1a2b63c21Eed655E7',
     },
   ],
   fee: false,
@@ -179,7 +187,7 @@ const BANANA = {
 };
 
 const LVC = {
-  version: 1,
+  version: 2,
   tokens: [
     new Token(ChainId.ZKCONSENSYS, '0xcc22F6AA610D1b2a0e89EF228079cB3e1831b1D1', 18, 'LVC'),
     new Token(ChainId.TELOS, '0x7d637d806b750B9C9f5d8e4e3634AA6639246924', 18, 'LVC'),
@@ -193,6 +201,56 @@ const LVC = {
   ],
   fee: false,
   sharedDecimals: 4,
+};
+// Added qBit
+const qBit = {
+  version: 2,
+  tokens: [
+    new Token(
+      ChainId.AVALANCHE,
+      '0x74A96f3113A0046Df3956f77d7A753025331f9Bd',
+      18,
+      'qBit',
+      'Quantum Bit',
+    ),
+    new Token(
+      ChainId.POLYGON,
+      '0x8bF087Be99983A4FF928A94Ac302fD5f139e4D7d',
+      18,
+      'qBit',
+      'Quantum Bit',
+    ),
+    new Token(
+      ChainId.BASE,
+      '0xF25893D5B7a99F087dD55fFb65Ca29133486090e',
+      18,
+      'qBit',
+      'Quantum Bit',
+    ),
+    new Token(
+      ChainId.ARBITRUM,
+      '0x529E43f03C426ba50dEc652496a9C84e617507Ca',
+      18,
+      'qBit',
+      'Quantum Bit',
+    ),
+    new Token(
+      ChainId.OPTIMISM,
+      '0x529E43f03C426ba50dEc652496a9C84e617507Ca',
+      18,
+      'qBit',
+      'Quantum Bit',
+    ),
+  ],
+  proxy: [
+    {chainId: ChainId.AVALANCHE, address: '0x74A96f3113A0046Df3956f77d7A753025331f9Bd'},
+    {chainId: ChainId.POLYGON, address: '0x8bF087Be99983A4FF928A94Ac302fD5f139e4D7d'},
+    {chainId: ChainId.BASE, address: '0xF25893D5B7a99F087dD55fFb65Ca29133486090e'},
+    {chainId: ChainId.ARBITRUM, address: '0x529E43f03C426ba50dEc652496a9C84e617507Ca'},
+    {chainId: ChainId.OPTIMISM, address: '0x529E43f03C426ba50dEc652496a9C84e617507Ca'},
+  ],
+  fee: false,
+  sharedDecimals: 6, // Adjusted to 18 for full precision
 };
 
 const VC = {
@@ -208,7 +266,7 @@ const VC = {
     },
     {
       chainId: ChainId.ZKSYNC,
-      address: '0x038b198152a83102F6380ee17d9Fbd69cde9797F'
+      address: '0x038b198152a83102F6380ee17d9Fbd69cde9797F',
     },
   ],
   fee: false,
@@ -228,14 +286,14 @@ const RF = {
     },
     {
       chainId: ChainId.ZKSYNC,
-      address: '0xF5430284e7418891E3A0477D7598a3aA861D5c1D'
+      address: '0xF5430284e7418891E3A0477D7598a3aA861D5c1D',
     },
   ],
   fee: false,
   sharedDecimals: 4,
 };
 
-export const TLOS  = {
+export const TLOS = {
   version: 2,
   tokens: [
     new Token(ChainId.ARBITRUM, '0x193f4A4a6ea24102F49b931DEeeb931f6E32405d', 18, TLOS_SYMBOL),
@@ -250,22 +308,16 @@ export const TLOS  = {
     {chainId: ChainId.BSC, address: '0x193f4A4a6ea24102F49b931DEeeb931f6E32405d'},
     {chainId: ChainId.POLYGON, address: '0x193f4A4a6ea24102F49b931DEeeb931f6E32405d'},
     {chainId: ChainId.ETHEREUM, address: '0x193f4A4a6ea24102F49b931DEeeb931f6E32405d'},
-    {chainId: ChainId.TELOS, address: '0x02Ea28694Ae65358Be92bAFeF5Cb8C211f33Db1A'}
+    {chainId: ChainId.TELOS, address: '0x02Ea28694Ae65358Be92bAFeF5Cb8C211f33Db1A'},
   ],
   fee: false,
   sharedDecimals: 4,
-}
+};
 
 export const appConfig: AppConfig = createAppConfig({
   bridge: {
     aptos: [],
-    oft: [
-      BANANA,
-      LVC,
-      VC,
-      RF,
-      TLOS
-    ],
+    oft: [BANANA, LVC, VC, RF, TLOS, qBit],
     wrappedToken: [
       wrapped_mainnet,
       // wrapped_testnet,
@@ -289,22 +341,28 @@ type BridgeSettings = {
   chainId: ChainId;
   chainListId: ChainListId;
   rpc: string;
-  abi: typeof bridgeAbi
-}
+  abi: typeof bridgeAbi;
+};
 
 export type ProxyConfig = {
   chainId: number;
   address: string;
-}
+};
 
 type NativeOftConfig = {
   bridge: BridgeSettings;
   token: Currency;
   proxy: ProxyConfig;
-}
+};
 
 export const telosNativeOft: NativeOftConfig = {
-  bridge: {address: '0x9c5ebCbE531aA81bD82013aBF97401f5C6111d76', chainId: ChainId.TELOS, chainListId: ChainListId.TELOS, rpc: 'https://mainnet.telos.net/evm', abi: bridgeAbi},
+  bridge: {
+    address: '0x9c5ebCbE531aA81bD82013aBF97401f5C6111d76',
+    chainId: ChainId.TELOS,
+    chainListId: ChainListId.TELOS,
+    rpc: 'https://mainnet.telos.net/evm',
+    abi: bridgeAbi,
+  },
   token: new Coin(ChainId.TELOS, 18, TLOS_SYMBOL),
-  proxy: {chainId: ChainId.TELOS, address: '0x02Ea28694Ae65358Be92bAFeF5Cb8C211f33Db1A'}
-}
+  proxy: {chainId: ChainId.TELOS, address: '0x02Ea28694Ae65358Be92bAFeF5Cb8C211f33Db1A'},
+};
