@@ -8,8 +8,8 @@ interface CustomHtmlHeadProps {
   url?: string;
 }
 
-//Change
-const defaultDescription = 'The LayerZero qBit Bridge enables seamless asset transfers between qBit within other blockchains. Connect your source and destination wallets to facilitate the seamless transfer of assets between Telos and external ecosystems, alleviating the risk of wrapped asset bridges.';
+//Changes
+const defaultDescription = 'The LayerZero qBit Bridge enables seamless asset transfers between qBit within other blockchains. Connect your source and destination wallets to facilitate the seamless transfer of qBit between blockchains, alleviating the risk of wrapped asset bridges.';
 const keywords = 'qBit, qbit, blockchain, crypto, message, transaction, omnichain, bridge';
 
 export const CustomHtmlHead = (props: CustomHtmlHeadProps) => {
