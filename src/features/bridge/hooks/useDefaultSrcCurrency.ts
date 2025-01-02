@@ -2,12 +2,11 @@ import {ChainId} from '@layerzerolabs/lz-sdk';
 import {chainKeyToEndpointId} from '@layerzerolabs/ui-core';
 import {useEffect} from 'react';
 
-import {bridgeStore,CurrencyOption } from '@/bridge/stores/bridgeStore';
+import {bridgeStore, CurrencyOption} from '@/bridge/stores/bridgeStore';
 import {balanceStore} from '@/core/stores/balanceStore';
 import {walletStore} from '@/core/stores/walletStore';
 
-import { TLOS_SYMBOL } from '../../../config';
-
+import {TLOS_SYMBOL} from '../../../config';
 
 export function useDefaultSrcCurrency() {
   const {address, chainKey} = walletStore.evm ?? {};
@@ -39,9 +38,12 @@ export function useDefaultSrcCurrency() {
     const {srcCurrencyOptions} = bridgeStore;
 
     // set Telos EVM TLOS as default
-    const telosNative = srcCurrencyOptions.find((option: CurrencyOption) => option.currency.chainId === ChainId.TELOS && option.currency.symbol === TLOS_SYMBOL)
+    const telosNative = srcCurrencyOptions.find(
+      (option: CurrencyOption) =>
+        option.currency.chainId === ChainId.OPTIMISM && option.currency.symbol === TLOS_SYMBOL,
+    );
     if (telosNative) {
-      if (srcChainId !== ChainId.TELOS){
+      if (srcChainId !== ChainId.TELOS) {
         bridgeStore.setSrcChainId(ChainId.TELOS);
       }
       bridgeStore.setSrcCurrency(telosNative.currency);

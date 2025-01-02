@@ -50,8 +50,6 @@ import {walletStore} from '@/core/stores/walletStore';
 import {onftStore} from '@/onft/stores/onftStore';
 import {initOnftStore} from '@/onft/stores/onftStore';
 
-import {telosNativeOft} from './config';
-
 export async function bootstrap(lzAppConfig: AppConfig, providerFactory: ProviderFactory) {
   // Compile a list of unique currencies used in the app based on the bridge configuration
   const currencies = getCurrenciesFromLzAppConfig(lzAppConfig);
@@ -113,9 +111,6 @@ export async function bootstrap(lzAppConfig: AppConfig, providerFactory: Provide
     addEvmOft(oftConfig);
     bridgeStore.addCurrencies(oftConfig.tokens);
   }
-
-  // add Telos Native for OFT bridge
-  bridgeStore.addCurrencies([telosNativeOft.token]);
 
   // add wrapped assets
   bridgeStore.addCurrencies(currencies);

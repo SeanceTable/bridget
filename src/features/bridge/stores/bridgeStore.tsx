@@ -26,7 +26,7 @@ import {
 import {ONE_ADDRESS, serializeAdapterParams} from '@layerzerolabs/ui-evm';
 import {assertWallet, Wallet} from '@layerzerolabs/ui-wallet';
 import assert from 'assert';
-import { Contract,ethers } from 'ethers';
+import {Contract, ethers} from 'ethers';
 import {autorun, computed, flow, makeAutoObservable} from 'mobx';
 import {fromPromise} from 'mobx-utils';
 import {toast} from 'react-toastify';
@@ -39,14 +39,14 @@ import {transactionStore} from '@/core/stores/transactionStore';
 import {uiStore} from '@/core/stores/uiStore';
 import {getWalletBalance} from '@/core/stores/utils';
 import {walletStore} from '@/core/stores/walletStore';
-import { getTokenIcon } from '@/core/ui/CurrencyIcon';
+import {getTokenIcon} from '@/core/ui/CurrencyIcon';
 import {Toast} from '@/core/ui/Toast';
 import {FromPromise, fromPromiseValue} from '@/core/utils/fromPromise';
 import {handleError} from '@/core/utils/handleError';
 import {parseWalletError} from '@/core/utils/parseWalletError';
 
-import { oftAbi } from '../../../abi/oftAbi';
-import { ProxyConfig, telosNativeOft,TLOS_SYMBOL } from '../../../config';
+import {oftAbi} from '../../../abi/oftAbi';
+import {ProxyConfig, telosNativeOft, TLOS_SYMBOL} from '../../../config';
 import {unclaimedStore} from './unclaimedStore';
 
 export enum DstNativeAmount {
@@ -104,15 +104,26 @@ export class BridgeStore {
   }
 
   // preferred order of network selection list
-  static chainOrder = [ChainId.TELOS, ChainId.ETHEREUM, ChainId.BSC, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.ZKCONSENSYS, ChainId.AVALANCHE,  ChainId.ARBITRUM];
+  static chainOrder = [
+    ChainId.TELOS,
+    ChainId.ETHEREUM,
+    ChainId.BSC,
+    ChainId.POLYGON,
+    ChainId.ZKSYNC,
+    ChainId.ZKCONSENSYS,
+    ChainId.AVALANCHE,
+    ChainId.ARBITRUM,
+  ];
 
   static sortChains(chains: ChainId[]): ChainId[] {
-    return chains.sort((a,b) => this.chainOrder.indexOf(b) - this.chainOrder.indexOf(a));
+    return chains.sort((a, b) => this.chainOrder.indexOf(b) - this.chainOrder.indexOf(a));
   }
 
   // views
   get output(): BridgeOutput | undefined {
-    return this.srcIsNativeTelos ? this.promise.output as BridgeOutput : fromPromiseValue(this.promise.output as FromPromise<BridgeOutput>);
+    return this.srcIsNativeTelos
+      ? (this.promise.output as BridgeOutput)
+      : fromPromiseValue(this.promise.output as FromPromise<BridgeOutput>);
   }
 
   get messageFee(): FeeQuote | undefined {
@@ -139,7 +150,7 @@ export class BridgeStore {
     if (!dstCurrency) return undefined;
 
     // use TLOS OFT api when destination currency is native TLOS
-    if (this.dstIsNativeTelos){
+    if (this.dstIsNativeTelos) {
       return this.apis.find(this.findTelosOftTransferApi);
     }
 
@@ -151,10 +162,10 @@ export class BridgeStore {
     if (!dstCurrency) return undefined;
 
     // use TLOS OFT api when destination currency is native TLOS
-    if (this.dstIsNativeTelos){
+    if (this.dstIsNativeTelos) {
       return this.apis.find(this.findTelosOftTransferApi);
     }
-    
+
     return this.apis.find((s) => s.supportsRegister(dstCurrency));
   }
 
@@ -200,7 +211,7 @@ export class BridgeStore {
   get srcCurrencyOptionsGroups(): OptionGroup<CurrencyOption>[] {
     const {srcChainId} = this.form;
     const {srcCurrencyOptions} = this;
-        
+
     const src: OptionGroup<CurrencyOption> = {
       title: tryGetNetwork(srcChainId)?.name + ' Network',
       key: 'src',
@@ -470,25 +481,26 @@ export class BridgeStore {
   }
 
   get dstIsNativeTelos(): boolean {
-    return this.form.dstCurrency?.symbol === TLOS_SYMBOL && this.form.dstChainId === ChainId.TELOS
+    return this.form.dstCurrency?.symbol === TLOS_SYMBOL && this.form.dstChainId === ChainId.TELOS;
   }
 
   get srcContractInstance(): Contract | undefined {
-      const wallet = walletStore.evm;
-      // use default provider if signer not available 
-      const provider = telosNativeOft.bridge.chainListId === wallet?.nativeChainId ? 
-        wallet?.signer : 
-        ethers.getDefaultProvider(telosNativeOft.bridge.rpc);
+    const wallet = walletStore.evm;
+    // use default provider if signer not available
+    const provider =
+      telosNativeOft.bridge.chainListId === wallet?.nativeChainId
+        ? wallet?.signer
+        : ethers.getDefaultProvider(telosNativeOft.bridge.rpc);
 
-      return new ethers.Contract(telosNativeOft.proxy.address, oftAbi, provider)
+    return new ethers.Contract(telosNativeOft.proxy.address, oftAbi, provider);
   }
 
   get srcBridgeContractInstance(): Contract | undefined {
-      const provider = ethers.getDefaultProvider(telosNativeOft.bridge.rpc);
-      return new ethers.Contract(telosNativeOft.bridge.address, telosNativeOft.bridge.abi, provider)
+    const provider = ethers.getDefaultProvider(telosNativeOft.bridge.rpc);
+    return new ethers.Contract(telosNativeOft.bridge.address, telosNativeOft.bridge.abi, provider);
   }
 
-  findTelosOftTransferApi(api: any ): boolean {
+  findTelosOftTransferApi(api: any): boolean {
     return api.config.proxy.some((p: ProxyConfig) => p.address === telosNativeOft.proxy.address);
   }
 
@@ -499,12 +511,12 @@ export class BridgeStore {
       (walletStore.evm as any).provider.request({
         method: 'wallet_watchAsset',
         params: {
-          type: 'ERC20', 
+          type: 'ERC20',
           options: {
-            address: token.address, 
-            symbol: token.symbol, 
-            decimals: token.decimals, 
-            image: getTokenIcon(token.symbol), 
+            address: token.address,
+            symbol: token.symbol,
+            decimals: token.decimals,
+            image: getTokenIcon(token.symbol),
           },
         },
       });
@@ -638,17 +650,18 @@ export class BridgeStore {
       assert(outputAmount, 'outputAmount');
       assert(srcWallet?.address, 'srcWallet');
       assert(dstWallet?.address, 'dstWallet');
-      assert(dstNativeBalance, 'dstNativeBalance');      
+      assert(dstNativeBalance, 'dstNativeBalance');
       assert(registerApi, 'registerApi');
 
       // try to register if possible
       let isRegistered = yield registerApi.isRegistered(dstCurrency, dstWallet.address);
       if (!isRegistered) {
-        const unsignedTransaction: Awaited<ReturnType<typeof registerApi['register']>> =
+        const unsignedTransaction: Awaited<ReturnType<(typeof registerApi)['register']>> =
           yield registerApi.register(dstCurrency);
 
-        const estimatedGasAmount: Awaited<ReturnType<typeof unsignedTransaction['estimateNative']>> = 
-          yield unsignedTransaction.estimateNative(dstWallet);
+        const estimatedGasAmount: Awaited<
+          ReturnType<(typeof unsignedTransaction)['estimateNative']>
+        > = yield unsignedTransaction.estimateNative(dstWallet);
 
         if (dstNativeBalance.greaterThan(estimatedGasAmount)) {
           yield this.register();
@@ -678,11 +691,10 @@ export class BridgeStore {
       yield srcWallet.switchChain(srcChainId);
       this.isSigning = true;
 
-
       let transactionResult: any = {};
 
       // if sending TLOS from Telos EVM, use contract method
-      if (this.srcIsNativeTelos){
+      if (this.srcIsNativeTelos) {
         transactionResult = yield this.sendNative();
         // ensure correct wallet
         yield assertWallet(srcWallet, {chainId: srcChainId, address: srcAddress});
@@ -690,22 +702,21 @@ export class BridgeStore {
         this.isSigning = false;
         this.isMining = true;
         transactionResult.wait();
-
-      }else if(transferApi){
-        const unsignedTransaction: Awaited<ReturnType<typeof transferApi['transfer']>> =
-        yield transferApi.transfer(input);
+      } else if (transferApi) {
+        const unsignedTransaction: Awaited<ReturnType<(typeof transferApi)['transfer']>> =
+          yield transferApi.transfer(input);
 
         // ensure correct wallet
         yield assertWallet(srcWallet, {chainId: srcChainId, address: srcAddress});
 
         const transaction: Awaited<
-          ReturnType<typeof unsignedTransaction['signAndSubmitTransaction']>
-        > = yield unsignedTransaction.signAndSubmitTransaction(srcWallet.signer);  
+          ReturnType<(typeof unsignedTransaction)['signAndSubmitTransaction']>
+        > = yield unsignedTransaction.signAndSubmitTransaction(srcWallet.signer);
         this.isSigning = false;
         this.isMining = true;
         const receipt: Awaited<ReturnType<TransactionResult['wait']>> = yield transaction.wait();
-        this.isMining = false; 
-        transactionResult.hash = receipt.txHash;     
+        this.isMining = false;
+        transactionResult.hash = receipt.txHash;
       }
       if (!isRegistered) {
         uiStore.claimReminderAlert.open();
@@ -715,7 +726,11 @@ export class BridgeStore {
         <Toast>
           <h1>Transaction Submitted</h1>
           <p>
-            <a href={getScanLink(srcChainId, transactionResult.hash)} target='_blank' rel='noreferrer'>
+            <a
+              href={getScanLink(srcChainId, transactionResult.hash)}
+              target='_blank'
+              rel='noreferrer'
+            >
               View on block explorer
             </a>
           </p>
@@ -766,9 +781,8 @@ export class BridgeStore {
     }
   });
 
-  // bridge Telos EVM TLOS by calling `sendFrom` directly on the native oft contract instance 
+  // bridge Telos EVM TLOS by calling `sendFrom` directly on the native oft contract instance
   sendNative: () => unknown = flow(function* (this: BridgeStore) {
-
     const {srcCurrency, srcChainId, dstChainId, amount} = this.form;
 
     assert(srcChainId, 'srcChainId');
@@ -779,16 +793,17 @@ export class BridgeStore {
     assert(this.srcContractInstance, 'srcContractInstance');
     assert(this.dstNativeAmount, 'dstNativeAmount');
 
-    const qty = ethers.utils.parseEther(amount)
+    const qty = ethers.utils.parseEther(amount);
     const toAddress = walletStore.evm?.address;
-    const toAddressBytes = ethers.utils.defaultAbiCoder.encode(["address"], [toAddress])
+    const toAddressBytes = ethers.utils.defaultAbiCoder.encode(['address'], [toAddress]);
 
     // if sending from Telos network, include amount in total native token sent
-    const fee = srcChainId === ChainId.TELOS ?
-      this.messageFee.nativeFee.add(CurrencyAmount.fromRawAmount(srcCurrency, qty.toBigInt())):
-      this.messageFee.nativeFee;
+    const fee =
+      srcChainId === ChainId.TELOS
+        ? this.messageFee.nativeFee.add(CurrencyAmount.fromRawAmount(srcCurrency, qty.toBigInt()))
+        : this.messageFee.nativeFee;
 
-    const totalEth =  ethers.BigNumber.from(fee.quotient);
+    const totalEth = ethers.BigNumber.from(fee.quotient);
     const serializedAdapterParams = serializeAdapterParams(this.adapterParams);
 
     const tx: unknown = yield this.srcContractInstance.sendFrom(
@@ -801,11 +816,11 @@ export class BridgeStore {
         zroPaymentAddress: ethers.constants.AddressZero,
         adapterParams: serializedAdapterParams,
       },
-      { value: totalEth } 
-    )
+      {value: totalEth},
+    );
 
     return tx;
-  })
+  });
 
   register: () => Promise<unknown> = flow(function* (this: BridgeStore) {
     this.isRegistering = true;
@@ -817,14 +832,14 @@ export class BridgeStore {
       assert(dstWallet, 'dstWallet');
       assert(registerApi, 'registerApi');
 
-      const unsignedTransaction: Awaited<ReturnType<typeof registerApi['register']>> =
+      const unsignedTransaction: Awaited<ReturnType<(typeof registerApi)['register']>> =
         yield registerApi.register(dstCurrency);
 
       const transactionResult: Awaited<
-        ReturnType<typeof unsignedTransaction['signAndSubmitTransaction']>
+        ReturnType<(typeof unsignedTransaction)['signAndSubmitTransaction']>
       > = yield unsignedTransaction.signAndSubmitTransaction(dstWallet);
 
-      const receipt: Awaited<ReturnType<typeof transactionResult['wait']>> =
+      const receipt: Awaited<ReturnType<(typeof transactionResult)['wait']>> =
         yield transactionResult.wait();
 
       toast.success(
@@ -866,16 +881,17 @@ export class BridgeStore {
       if (allowance.numerator !== 0n) {
         this.isResetting = true;
         const zero = CurrencyAmount.fromRawAmount(amount.currency, 0);
-        const unsignedResetTrx: Awaited<ReturnType<typeof transferApi['approve']>> = yield transferApi.approve(zero);
+        const unsignedResetTrx: Awaited<ReturnType<(typeof transferApi)['approve']>> =
+          yield transferApi.approve(zero);
         yield unsignedResetTrx.signAndSubmitTransaction(srcWallet.signer);
         this.isResetting = false;
       }
 
-      const unsignedTransaction: Awaited<ReturnType<typeof transferApi['approve']>> =
+      const unsignedTransaction: Awaited<ReturnType<(typeof transferApi)['approve']>> =
         yield transferApi.approve(amount);
 
       const transactionResult: Awaited<
-        ReturnType<typeof unsignedTransaction['signAndSubmitTransaction']>
+        ReturnType<(typeof unsignedTransaction)['signAndSubmitTransaction']>
       > = yield unsignedTransaction.signAndSubmitTransaction(srcWallet.signer);
       yield transactionResult.wait();
       yield this.updateAllowance();
@@ -903,14 +919,12 @@ export class BridgeStore {
     const {amount, transferApi} = this;
     if (!amount) return;
     if (!dstCurrency) return;
-    if(this.srcIsNativeTelos){
-      yield (this.promise.output = 
-        {
-          amount,
-          fees: { totalFee:  CurrencyAmount.fromRawAmount(dstCurrency, 0)}
-        }
-      );
-    }else if (transferApi){
+    if (this.srcIsNativeTelos) {
+      yield (this.promise.output = {
+        amount,
+        fees: {totalFee: CurrencyAmount.fromRawAmount(dstCurrency, 0)},
+      });
+    } else if (transferApi) {
       yield (this.promise.output = fromPromise(
         transferApi.getOutput(amount, dstCurrency).then((output) => ({
           amount: output.amount,
@@ -935,17 +949,25 @@ export class BridgeStore {
     const multiplier = new Fraction(110, 100);
 
     // if source is telos EVM OFT get fees directly from bridge contract
-    if (this.srcIsNativeTelos && srcBridgeContractInstance){
-      const args: [ChainId, boolean, string] = [dstCurrency.chainId, false, serializeAdapterParams(adapterParams)];
+    if (this.srcIsNativeTelos && srcBridgeContractInstance) {
+      const args: [ChainId, boolean, string] = [
+        dstCurrency.chainId,
+        false,
+        serializeAdapterParams(adapterParams),
+      ];
       const nativeCurrency = getNativeCurrency(ChainId.TELOS);
 
-      yield this.promise.messageFee = fromPromise(
-        (srcBridgeContractInstance.estimateBridgeFee(...args)).then((fee: {nativeFee: BigintIsh, zroFee: BigintIsh}) => ({
-            nativeFee: CurrencyAmount.fromRawAmount(nativeCurrency, fee.nativeFee).multiply(multiplier),
+      yield (this.promise.messageFee = fromPromise(
+        srcBridgeContractInstance
+          .estimateBridgeFee(...args)
+          .then((fee: {nativeFee: BigintIsh; zroFee: BigintIsh}) => ({
+            nativeFee: CurrencyAmount.fromRawAmount(nativeCurrency, fee.nativeFee).multiply(
+              multiplier,
+            ),
             zroFee: CurrencyAmount.fromRawAmount(nativeCurrency, fee.zroFee).multiply(multiplier),
-          }))
-      );
-    }else if (transferApi){
+          })),
+      ));
+    } else if (transferApi) {
       yield (this.promise.messageFee = fromPromise(
         transferApi.getMessageFee(srcCurrency, dstCurrency, adapterParams).then((fee) => ({
           nativeFee: fee.nativeFee.multiply(multiplier),
@@ -994,7 +1016,10 @@ export class BridgeStore {
 function isValidPair(srcCurrency: Currency, dstCurrency: Currency): boolean {
   if (srcCurrency.chainId === dstCurrency.chainId) return false;
   // validate TLOS OFT pairs in addition to available api check
-  return bridgeStore.apis.some((api) => api.supportsTransfer(srcCurrency, dstCurrency)) || srcCurrency.symbol === TLOS_SYMBOL && dstCurrency.symbol === TLOS_SYMBOL;
+  return (
+    bridgeStore.apis.some((api) => api.supportsTransfer(srcCurrency, dstCurrency)) ||
+    (srcCurrency.symbol === TLOS_SYMBOL && dstCurrency.symbol === TLOS_SYMBOL)
+  );
 }
 
 function findMatchingCurrency(currency: Currency) {

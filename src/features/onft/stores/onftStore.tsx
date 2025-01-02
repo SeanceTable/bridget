@@ -419,17 +419,16 @@ class OnftBridgeStore {
         yield assertWallet(srcWallet, {chainId: srcChainId, address: srcAddress});
 
         // This looks like it's just approving one asset but under the hood it's setting approval for all
-        const isApproved: Awaited<ReturnType<typeof api['isApproved']>> = yield api.isApproved(
+        const isApproved: Awaited<ReturnType<(typeof api)['isApproved']>> = yield api.isApproved(
           srcTokens,
           srcAddress,
         );
         if (!isApproved) {
           this.isApproving = true;
-          const unsignedTransaction: Awaited<ReturnType<typeof api['approve']>> = yield api.approve(
-            srcTokens,
-          );
+          const unsignedTransaction: Awaited<ReturnType<(typeof api)['approve']>> =
+            yield api.approve(srcTokens);
           const approveTransaction: Awaited<
-            ReturnType<typeof unsignedTransaction['signAndSubmitTransaction']>
+            ReturnType<(typeof unsignedTransaction)['signAndSubmitTransaction']>
           > = yield unsignedTransaction.signAndSubmitTransaction(srcWallet.signer);
 
           yield approveTransaction.wait();
@@ -442,7 +441,7 @@ class OnftBridgeStore {
           input,
         );
         const transferTransaction: Awaited<
-          ReturnType<typeof unsignedTransaction['signAndSubmitTransaction']>
+          ReturnType<(typeof unsignedTransaction)['signAndSubmitTransaction']>
         > = yield unsignedTransaction.signAndSubmitTransaction(srcWallet.signer);
         this.isSigning = false;
 
@@ -548,7 +547,7 @@ class OnftBridgeStore {
       if (!address) return;
       const inflight: OnftInflightTransaction[] = [];
       for (const api of this.apis) {
-        const batch: Awaited<ReturnType<typeof api['getInflight']>> = yield api.getInflight(
+        const batch: Awaited<ReturnType<(typeof api)['getInflight']>> = yield api.getInflight(
           address,
         );
         inflight.push(...batch);
