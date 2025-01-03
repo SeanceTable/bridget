@@ -221,11 +221,11 @@ const qBit = {
       'Quantum Bit',
     ),
     new Token(
-      204, // opBNB chain ID (replace this with the actual opBNB chain ID)
-      '0x97daC874195b627ba83310FD85F02ff8a47481c9',
+      ChainId.BASE,
+      '0xf4B83B97A19712ae146f30177D48b21fB3c0AA31',
       18,
       'qBit',
-      'Quantum Bit'
+      'Quantum Bit',
     ),
     new Token(
       ChainId.ARBITRUM,
